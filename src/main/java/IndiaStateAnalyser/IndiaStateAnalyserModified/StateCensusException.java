@@ -3,7 +3,7 @@ package IndiaStateAnalyser.IndiaStateAnalyserModified;
 public class StateCensusException extends Exception{
 	
 	enum CensusExceptionType {
-		NO_SUCH_FILE,IO_EXCEPTION
+		NO_SUCH_FILE,IO_EXCEPTION,EXTENSION_INVALID
 	}
 	
 	CensusExceptionType type;
