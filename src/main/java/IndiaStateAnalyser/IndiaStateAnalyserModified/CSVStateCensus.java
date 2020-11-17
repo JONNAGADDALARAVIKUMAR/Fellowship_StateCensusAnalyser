@@ -1,4 +1,4 @@
-package IndiaStateAnalyser;
+package IndiaStateAnalyser.IndiaStateAnalyserModified;
 
 import com.opencsv.bean.CsvBindByName;
 
