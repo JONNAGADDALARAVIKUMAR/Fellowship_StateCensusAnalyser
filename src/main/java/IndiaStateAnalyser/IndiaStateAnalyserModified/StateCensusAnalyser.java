@@ -17,7 +17,7 @@ public class StateCensusAnalyser {
 		int count = 0;
 		
 		try {
-			Iterator<CSVStateCensus> iterator = getIterator(FILE_PATH);	
+			Iterator<CSVStateCensus> iterator = getIteratorStateCensus(FILE_PATH);	
 			
 			while(iterator.hasNext()) {
 				iterator.next();
@@ -31,7 +31,7 @@ public class StateCensusAnalyser {
 		}
 	}
 	
-	private static Iterator<CSVStateCensus> getIterator(String FILE_PATH) throws IOException, StateCensusException { //Loads Iterator And Returns
+	private static Iterator<CSVStateCensus> getIteratorStateCensus(String FILE_PATH) throws IOException, StateCensusException { //Loads Iterator And Returns
 		Iterator<CSVStateCensus> iterator;
 		try {
 			String extension = FilenameUtils.getExtension(FILE_PATH);
@@ -47,5 +47,33 @@ public class StateCensusAnalyser {
 		catch(RuntimeException e) {
 			throw new StateCensusException(StateCensusException.CensusExceptionType.HEADER_INVALID, "Wrong Header");
 		}
+	}
+
+	public static int loadStateCodeCsv(String FILE_PATH) {
+		int count = 0;
+		
+		try {
+			Iterator<IndianStateCodes> iterator = getIteratorStateCodes(FILE_PATH);	
+
+			while(iterator.hasNext()) {
+				iterator.next();
+				count++;
+			}			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	private static Iterator<IndianStateCodes> getIteratorStateCodes(String FILE_PATH) {
+		Iterator<IndianStateCodes> iterator = null;
+		try {
+			Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH));
+			CsvToBean csvToBean = new CsvToBeanBuilder(reader).withType(IndianStateCodes.class).build();
+			iterator = csvToBean.iterator();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return iterator;
 	}
 }

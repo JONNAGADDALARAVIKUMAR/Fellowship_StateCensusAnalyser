@@ -9,6 +9,7 @@ public class IndiaStateAnalyserTest {
 	private static final String FILE_PATH_WRONG_EXTENSION = "C:\\Users\\Admin\\workspace\\IndiaStateAnalyser\\src\\main\\resources\\IndiaStateCensusData.json";
 	private static final String FILE_PATH_DELIMITER = "C:\\Users\\Admin\\workspace\\IndiaStateAnalyserModified\\src\\main\\resources\\IndiaStateCensusDataDelimiter.csv";
 	private static final String FILE_PATH_HEADER = "C:\\Users\\Admin\\workspace\\IndiaStateAnalyserModified\\src\\main\\resources\\IndiaStateCensusDataHeader.csv";
+	private static final String FILE_PATH_STATECODE = "C:\\Users\\Admin\\workspace\\IndiaStateAnalyserModified\\src\\main\\resources\\IndiaStateCode.csv";
 
 	@Test
 	public void thisTestCasePasesWhenReturnValueEqualsTonumberOfStates() throws StateCensusException {
@@ -50,5 +51,11 @@ public class IndiaStateAnalyserTest {
 		} catch(StateCensusException e) {
 			Assert.assertEquals(StateCensusException.CensusExceptionType.HEADER_INVALID, e.type);
 		}
+	}
+	
+	@Test
+	public void thisTestCasePasesWhenReturnValueEqualsTonumberOfStatesStateCodes() {
+		int count = StateCensusAnalyser.loadStateCodeCsv(FILE_PATH_STATECODE);
+		Assert.assertEquals(37, count);
 	}
 }
