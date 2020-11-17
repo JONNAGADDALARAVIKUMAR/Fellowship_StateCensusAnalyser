@@ -59,6 +59,8 @@ public class StateCensusAnalyser {
 				iterator.next();
 				count++;
 			}			
+		} catch(RuntimeException e) {
+			throw new StateCensusException(StateCensusException.CensusExceptionType.DELIMITER_EXCEPTION, "Delimiter Issue");
 		} catch(IOException e) {
 			throw new StateCensusException(StateCensusException.CensusExceptionType.IO_EXCEPTION, "IO Exception");
 		}

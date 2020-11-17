@@ -79,4 +79,13 @@ public class IndiaStateAnalyserTest {
 			Assert.assertEquals(StateCensusException.CensusExceptionType.EXTENSION_INVALID, e.type);
 		}
 	}
+	
+	@Test
+	public void thisTestCasePasesWhenReturnExceptionWhenIncorrectDelimiterArisedSteteCodes() {
+		try{
+			StateCensusAnalyser.loadStateCodeCsv(FILE_PATH_STATECODE_DELIMITER);
+		} catch(StateCensusException e) {
+			Assert.assertEquals(StateCensusException.CensusExceptionType.DELIMITER_EXCEPTION, e.type);
+		}
+	}
 }
