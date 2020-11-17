@@ -49,7 +49,7 @@ public class StateCensusAnalyser {
 		}
 	}
 
-	public static int loadStateCodeCsv(String FILE_PATH) {
+	public static int loadStateCodeCsv(String FILE_PATH) throws StateCensusException {
 		int count = 0;
 		
 		try {
@@ -59,15 +59,18 @@ public class StateCensusAnalyser {
 				iterator.next();
 				count++;
 			}			
-		} catch(Exception e) {
-			e.printStackTrace();
+		} catch(IOException e) {
+			throw new StateCensusException(StateCensusException.CensusExceptionType.IO_EXCEPTION, "IO Exception");
 		}
 		return count;
 	}
 
-	private static Iterator<IndianStateCodes> getIteratorStateCodes(String FILE_PATH) throws IOException, StateCensusException {
+	private static Iterator<IndianStateCodes> getIteratorStateCodes(String FILE_PATH) throws IOException, StateCensusException {//Loads Iterator And Returns
 		Iterator<IndianStateCodes> iterator = null;
 		try {
+			String extension = FilenameUtils.getExtension(FILE_PATH);
+			if(!extension.contains("csv"))
+				throw new StateCensusException(StateCensusException.CensusExceptionType.EXTENSION_INVALID, "Extension Miss match");
 			Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH));
 			CsvToBean csvToBean = new CsvToBeanBuilder(reader).withType(IndianStateCodes.class).build();
 			iterator = csvToBean.iterator();
