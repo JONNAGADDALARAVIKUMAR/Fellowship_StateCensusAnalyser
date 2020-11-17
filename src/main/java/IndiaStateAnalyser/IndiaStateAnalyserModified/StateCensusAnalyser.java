@@ -22,13 +22,13 @@ public class StateCensusAnalyser {
 			while(iterator.hasNext()) {
 				iterator.next();
 				count++;
-			}			
+			}	
+			return count;
 		}catch(RuntimeException e) {
 			throw new StateCensusException(StateCensusException.CensusExceptionType.DELIMITER_EXCEPTION, "Delimiter Issue");
 		} catch(IOException e) {
 			throw new StateCensusException(StateCensusException.CensusExceptionType.IO_EXCEPTION, "IO Exception");
 		}
-		return count;
 	}
 	
 	private static Iterator<CSVStateCensus> getIterator(String FILE_PATH) throws IOException, StateCensusException { //Loads Iterator And Returns
@@ -43,6 +43,9 @@ public class StateCensusAnalyser {
 			return iterator;
 		} catch(NoSuchFileException e) {
 			throw new StateCensusException(StateCensusException.CensusExceptionType.NO_SUCH_FILE, "File Not Found");
+		}
+		catch(RuntimeException e) {
+			throw new StateCensusException(StateCensusException.CensusExceptionType.HEADER_INVALID, "Wrong Header");
 		}
 	}
 }
