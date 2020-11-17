@@ -7,6 +7,7 @@ public class IndiaStateAnalyserTest {
 	private static final String FILE_PATH = "C:\\Users\\Admin\\workspace\\IndiaStateAnalyserModified\\src\\main\\resources\\IndiaStateCensusData.csv";
 	private static final String WRONG_FILE_PATH = "C:\\Users\\Admin\\workspace\\IndiaAnalyserModified\\src\\main\\resources\\IndiaStateCensusData.csv";
 	private static final String FILE_PATH_WRONG_EXTENSION = "C:\\Users\\Admin\\workspace\\IndiaStateAnalyser\\src\\main\\resources\\IndiaStateCensusData.json";
+	private static final String FILE_PATH_DELIMITER = "C:\\Users\\Admin\\workspace\\IndiaStateAnalyserModified\\src\\main\\resources\\IndiaStateCensusData2.csv";
 	
 	@Test
 	public void thisTestCasePasesWhenReturnValueEqualsTonumberOfStates() throws StateCensusException {
@@ -28,7 +29,16 @@ public class IndiaStateAnalyserTest {
 		try{
 			StateCensusAnalyser.loadStateCensusCsv(FILE_PATH_WRONG_EXTENSION);
 		} catch(StateCensusException e) {
-			Assert.assertEquals(StateCensusException.CensusExceptionType.NO_SUCH_FILE, e.type);
+			Assert.assertEquals(StateCensusException.CensusExceptionType.EXTENSION_INVALID, e.type);
+		}
+	}
+	
+	@Test
+	public void thisTestCasePasesWhenReturnExceptionWhenIncorrectDelimiterArised() {
+		try{
+			StateCensusAnalyser.loadStateCensusCsv(FILE_PATH_DELIMITER);
+		} catch(StateCensusException e) {
+			Assert.assertEquals(StateCensusException.CensusExceptionType.DELIMITER_EXCEPTION, e.type);
 		}
 	}
 }
