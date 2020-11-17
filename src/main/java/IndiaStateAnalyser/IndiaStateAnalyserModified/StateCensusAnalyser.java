@@ -65,15 +65,15 @@ public class StateCensusAnalyser {
 		return count;
 	}
 
-	private static Iterator<IndianStateCodes> getIteratorStateCodes(String FILE_PATH) {
+	private static Iterator<IndianStateCodes> getIteratorStateCodes(String FILE_PATH) throws IOException, StateCensusException {
 		Iterator<IndianStateCodes> iterator = null;
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH));
 			CsvToBean csvToBean = new CsvToBeanBuilder(reader).withType(IndianStateCodes.class).build();
 			iterator = csvToBean.iterator();
-		} catch(Exception e) {
-			e.printStackTrace();
+			return iterator;
+		} catch(NoSuchFileException e) {
+			throw new StateCensusException(StateCensusException.CensusExceptionType.NO_SUCH_FILE, "File Not Found");
 		}
-		return iterator;
 	}
 }
