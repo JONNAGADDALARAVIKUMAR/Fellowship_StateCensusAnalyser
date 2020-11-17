@@ -79,6 +79,8 @@ public class StateCensusAnalyser {
 			return iterator;
 		} catch(NoSuchFileException e) {
 			throw new StateCensusException(StateCensusException.CensusExceptionType.NO_SUCH_FILE, "File Not Found");
+		} catch(RuntimeException e) {
+			throw new StateCensusException(StateCensusException.CensusExceptionType.HEADER_INVALID, "Wrong Header");
 		}
 	}
 }
