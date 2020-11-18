@@ -14,15 +14,10 @@ public class StateCensusAnalyser {
 	
 	
 	public static int loadStateCensusCsv(String FILE_PATH) throws StateCensusException {
-		int count = 0;
 		
 		try {
 			Iterator<CSVStateCensus> iterator = getIterator(FILE_PATH, CSVStateCensus.class);	
-			
-			while(iterator.hasNext()) {
-				iterator.next();
-				count++;
-			}	
+			int count = getCount(iterator);
 			return count;
 		}catch(RuntimeException e) {
 			throw new StateCensusException(StateCensusException.CensusExceptionType.DELIMITER_EXCEPTION, "Delimiter Issue");
@@ -32,23 +27,27 @@ public class StateCensusAnalyser {
 	}
 	
 	public static int loadStateCodeCsv(String FILE_PATH) throws StateCensusException {
-		int count = 0;
 		
 		try {
 			Iterator<IndianStateCodes> iterator = getIterator(FILE_PATH, IndianStateCodes.class);	
-
-			while(iterator.hasNext()) {
-				iterator.next();
-				count++;
-			}			
+			int count = getCount(iterator);	
+			return count;
 		} catch(RuntimeException e) {
 			throw new StateCensusException(StateCensusException.CensusExceptionType.DELIMITER_EXCEPTION, "Delimiter Issue");
 		} catch(IOException e) {
 			throw new StateCensusException(StateCensusException.CensusExceptionType.IO_EXCEPTION, "IO Exception");
+		}	
+	}
+	
+	private static <E> int getCount(Iterator<E> iterator) {
+		int count = 0;
+		while(iterator.hasNext()) {
+			iterator.next();
+			count++;
 		}
 		return count;
 	}
-	
+
 	private static <E> Iterator<E> getIterator(String FILE_PATH, Class<E> localClass) throws IOException, StateCensusException { //Loads Iterator And Returns
 		Iterator<E> iterator;
 		try {
