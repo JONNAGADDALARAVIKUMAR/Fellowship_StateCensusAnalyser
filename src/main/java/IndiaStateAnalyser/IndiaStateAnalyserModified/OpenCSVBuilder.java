@@ -11,7 +11,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 
 public class OpenCSVBuilder<E> implements ICSVBuilder {
 		
-		public <E> Iterator<E> getIterator(String FILE_PATH, Class<E> localClass) throws IOException, StateCensusException { //Loads Iterator And Returns
+		public <E> Iterator<E> getIterator(String FILE_PATH, Class<E> localClass) throws IOException, CSVBuilderException, StateCensusException { //Loads Iterator And Returns
 			Iterator<E> iterator;
 			try {
 				
@@ -24,12 +24,7 @@ public class OpenCSVBuilder<E> implements ICSVBuilder {
 				throw new StateCensusException(StateCensusException.CensusExceptionType.NO_SUCH_FILE, "File Not Found");
 			}
 			catch(RuntimeException e) {
-				throw new StateCensusException(StateCensusException.CensusExceptionType.HEADER_INVALID, "Wrong Header");
+				throw new CSVBuilderException(CSVBuilderException.CSVBuilderExceptionType.UNABLE_TO_PARSE, "Unable to parse");
 			}
-		}
-
-		public <E> Iterator<E> ICSVBuilder(String FILE_PATH, Class<E> localClass) throws StateCensusException {
-			// TODO Auto-generated method stub
-			return null;
 		}
 }

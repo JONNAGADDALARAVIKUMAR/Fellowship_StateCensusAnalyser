@@ -1,14 +1,14 @@
 package IndiaStateAnalyser.IndiaStateAnalyserModified;
 
-public class CSVBuilderException {
+public class CSVBuilderException extends Exception{
 	public enum CSVBuilderExceptionType {
-        UNABLE_TO_PARSE
+        UNABLE_TO_PARSE,NO_SUCH_FILE
     }
  
 	public CSVBuilderExceptionType type;
 
 	public CSVBuilderException(CSVBuilderExceptionType type, String message) {
-		super();
+		super(message);
 		this.type = type;
 	}
 }

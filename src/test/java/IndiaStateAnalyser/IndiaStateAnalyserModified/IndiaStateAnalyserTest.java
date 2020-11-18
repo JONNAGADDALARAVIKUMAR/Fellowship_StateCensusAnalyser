@@ -16,13 +16,13 @@ public class IndiaStateAnalyserTest {
 	private static final String FILE_PATH_STATECODE_HEADER = "C:\\Users\\Admin\\workspace\\IndiaStateAnalyserModified\\src\\main\\resources\\IndiaStateCodeHeader.csv";
 
 	@Test
-	public void thisTestCasePasesWhenReturnValueEqualsTonumberOfStates() throws StateCensusException {
+	public void thisTestCasePasesWhenReturnValueEqualsTonumberOfStates() throws StateCensusException, CSVBuilderException {
 		int count = StateCensusAnalyser.loadStateCensusCsv(FILE_PATH);
 		Assert.assertEquals(29, count);
 	}
 	
 	@Test
-	public void thisTestCasePasesWhenReturnExceptionIsNoSUchFile() {
+	public void thisTestCasePasesWhenReturnExceptionIsNoSUchFile() throws CSVBuilderException {
 		try{
 			StateCensusAnalyser.loadStateCensusCsv(WRONG_FILE_PATH);
 		} catch(StateCensusException e) {
@@ -31,7 +31,7 @@ public class IndiaStateAnalyserTest {
 	}
 	
 	@Test
-	public void thisTestCasePasesWhenReturnExceptionWhenExtensionIncorrect() {
+	public void thisTestCasePasesWhenReturnExceptionWhenExtensionIncorrect() throws CSVBuilderException {
 		try{
 			StateCensusAnalyser.loadStateCensusCsv(FILE_PATH_WRONG_EXTENSION);
 		} catch(StateCensusException e) {
@@ -40,7 +40,7 @@ public class IndiaStateAnalyserTest {
 	}
 	
 	@Test
-	public void thisTestCasePasesWhenReturnExceptionWhenIncorrectDelimiterArised() {
+	public void thisTestCasePasesWhenReturnExceptionWhenIncorrectDelimiterArised() throws CSVBuilderException {
 		try{
 			StateCensusAnalyser.loadStateCensusCsv(FILE_PATH_DELIMITER);
 		} catch(StateCensusException e) {
@@ -49,7 +49,7 @@ public class IndiaStateAnalyserTest {
 	}
 	
 	@Test
-	public void thisTestCasePasesWhenReturnExceptionWhenIncorrectHeader() {
+	public void thisTestCasePasesWhenReturnExceptionWhenIncorrectHeader() throws CSVBuilderException {
 		try{
 			StateCensusAnalyser.loadStateCensusCsv(FILE_PATH_HEADER);
 		} catch(StateCensusException e) {
@@ -58,13 +58,13 @@ public class IndiaStateAnalyserTest {
 	}
 	
 	@Test
-	public void thisTestCasePasesWhenReturnValueEqualsTonumberOfStatesStateCodes() throws StateCensusException {
+	public void thisTestCasePasesWhenReturnValueEqualsTonumberOfStatesStateCodes() throws StateCensusException, CSVBuilderException {
 		int count = StateCensusAnalyser.loadStateCodeCsv(FILE_PATH_STATECODE);
 		Assert.assertEquals(37, count);
 	}
 	
 	@Test
-	public void thisTestCasePasesWhenReturnExceptionIsNoSUchFileStatesStateCodes() {
+	public void thisTestCasePasesWhenReturnExceptionIsNoSUchFileStatesStateCodes() throws CSVBuilderException {
 		try{
 			StateCensusAnalyser.loadStateCodeCsv(WRONG_FILE_PATH);
 		} catch(StateCensusException e) {
@@ -73,7 +73,7 @@ public class IndiaStateAnalyserTest {
 	}
 	
 	@Test
-	public void thisTestCasePasesWhenReturnExceptionWhenExtensionIncorrectStateCodes() {
+	public void thisTestCasePasesWhenReturnExceptionWhenExtensionIncorrectStateCodes() throws CSVBuilderException {
 		try{
 			StateCensusAnalyser.loadStateCodeCsv(FILE_PATH_STATECODE_EXTENSION);
 		} catch(StateCensusException e) {
@@ -82,7 +82,7 @@ public class IndiaStateAnalyserTest {
 	}
 	
 	@Test
-	public void thisTestCasePasesWhenReturnExceptionWhenIncorrectDelimiterArisedSteteCodes() {
+	public void thisTestCasePasesWhenReturnExceptionWhenIncorrectDelimiterArisedSteteCodes() throws CSVBuilderException {
 		try{
 			StateCensusAnalyser.loadStateCodeCsv(FILE_PATH_STATECODE_DELIMITER);
 		} catch(StateCensusException e) {
@@ -91,7 +91,7 @@ public class IndiaStateAnalyserTest {
 	}
 	
 	@Test
-	public void thisTestCasePasesWhenReturnExceptionWhenIncorrectHeaderStateCodes() {
+	public void thisTestCasePasesWhenReturnExceptionWhenIncorrectHeaderStateCodes() throws CSVBuilderException {
 		try{
 			StateCensusAnalyser.loadStateCodeCsv(FILE_PATH_STATECODE_HEADER);
 		} catch(StateCensusException e) {
