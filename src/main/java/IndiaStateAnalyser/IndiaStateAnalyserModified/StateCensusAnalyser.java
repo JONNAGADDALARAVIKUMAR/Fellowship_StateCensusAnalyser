@@ -17,7 +17,7 @@ public class StateCensusAnalyser {
 		int count = 0;
 		
 		try {
-			Iterator<CSVStateCensus> iterator = getIteratorStateCensus(FILE_PATH);	
+			Iterator<CSVStateCensus> iterator = getIterator(FILE_PATH, CSVStateCensus.class);	
 			
 			while(iterator.hasNext()) {
 				iterator.next();
@@ -31,29 +31,11 @@ public class StateCensusAnalyser {
 		}
 	}
 	
-	private static Iterator<CSVStateCensus> getIteratorStateCensus(String FILE_PATH) throws IOException, StateCensusException { //Loads Iterator And Returns
-		Iterator<CSVStateCensus> iterator;
-		try {
-			String extension = FilenameUtils.getExtension(FILE_PATH);
-			if(!extension.contains("csv"))
-				throw new StateCensusException(StateCensusException.CensusExceptionType.EXTENSION_INVALID, "Extension Miss match");
-			Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH));
-			CsvToBean csvToBean = new CsvToBeanBuilder(reader).withType(CSVStateCensus.class).build();
-			iterator = csvToBean.iterator();
-			return iterator;
-		} catch(NoSuchFileException e) {
-			throw new StateCensusException(StateCensusException.CensusExceptionType.NO_SUCH_FILE, "File Not Found");
-		}
-		catch(RuntimeException e) {
-			throw new StateCensusException(StateCensusException.CensusExceptionType.HEADER_INVALID, "Wrong Header");
-		}
-	}
-
 	public static int loadStateCodeCsv(String FILE_PATH) throws StateCensusException {
 		int count = 0;
 		
 		try {
-			Iterator<IndianStateCodes> iterator = getIteratorStateCodes(FILE_PATH);	
+			Iterator<IndianStateCodes> iterator = getIterator(FILE_PATH, IndianStateCodes.class);	
 
 			while(iterator.hasNext()) {
 				iterator.next();
@@ -66,20 +48,21 @@ public class StateCensusAnalyser {
 		}
 		return count;
 	}
-
-	private static Iterator<IndianStateCodes> getIteratorStateCodes(String FILE_PATH) throws IOException, StateCensusException {//Loads Iterator And Returns
-		Iterator<IndianStateCodes> iterator = null;
+	
+	private static <E> Iterator<E> getIterator(String FILE_PATH, Class<E> localClass) throws IOException, StateCensusException { //Loads Iterator And Returns
+		Iterator<E> iterator;
 		try {
 			String extension = FilenameUtils.getExtension(FILE_PATH);
 			if(!extension.contains("csv"))
 				throw new StateCensusException(StateCensusException.CensusExceptionType.EXTENSION_INVALID, "Extension Miss match");
 			Reader reader = Files.newBufferedReader(Paths.get(FILE_PATH));
-			CsvToBean csvToBean = new CsvToBeanBuilder(reader).withType(IndianStateCodes.class).build();
+			CsvToBean csvToBean = new CsvToBeanBuilder(reader).withType(localClass).build();
 			iterator = csvToBean.iterator();
 			return iterator;
 		} catch(NoSuchFileException e) {
 			throw new StateCensusException(StateCensusException.CensusExceptionType.NO_SUCH_FILE, "File Not Found");
-		} catch(RuntimeException e) {
+		}
+		catch(RuntimeException e) {
 			throw new StateCensusException(StateCensusException.CensusExceptionType.HEADER_INVALID, "Wrong Header");
 		}
 	}
